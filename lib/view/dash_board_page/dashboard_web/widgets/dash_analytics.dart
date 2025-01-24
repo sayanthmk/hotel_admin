@@ -113,7 +113,7 @@ class CalendarSection extends StatelessWidget {
       ),
       child: TableCalendar(
         firstDay: DateTime.utc(2024, 1, 1),
-        lastDay: DateTime.utc(2024, 12, 31),
+        lastDay: DateTime.utc(2025, 12, 31),
         focusedDay: DateTime.now(),
         calendarFormat: CalendarFormat.month,
         headerStyle: const HeaderStyle(

@@ -84,7 +84,7 @@ class HotelCard extends StatelessWidget {
                     const Text(' 4.5'),
                     const Spacer(),
                     Text(
-                      '\$200/night',
+                      '₹200/night',
                       style: TextStyle(
                           color: Colors.grey[800], fontWeight: FontWeight.bold),
                     ),

@@ -27,7 +27,7 @@ class DashWebQuickStats extends StatelessWidget {
               color: Colors.green),
           StatCard(
               title: 'Total Revenue',
-              value: '\$35,000',
+              value: '₹35,000',
               icon: Icons.attach_money,
               color: Colors.orange),
           StatCard(

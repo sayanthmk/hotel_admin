@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hotel_admin/model/hotel_model.dart';
@@ -104,7 +107,7 @@ class AdminHotelProvider with ChangeNotifier {
         'approvedAt': FieldValue.serverTimestamp(),
       });
 
-      await fetchApprovedHotels(); 
+      await fetchApprovedHotels();
 
       _isLoading = false;
       notifyListeners();
@@ -116,7 +119,22 @@ class AdminHotelProvider with ChangeNotifier {
       _errorMessage = 'Error approving hotel: ${e.toString()}';
       notifyListeners();
       // print('Error in approveHotel: $_errorMessage');
-      rethrow; 
+      rethrow;
+    }
+  }
+
+  Future<String?> getTheAdminName() async {
+    try {
+      final String? currentUserId = FirebaseAuth.instance.currentUser?.email;
+
+      if (currentUserId == null) {
+        throw Exception('Error: User is not logged in.');
+      }
+
+      return currentUserId;
+    } catch (e) {
+      print('Error fetching admin ID: $e');
+      return null; // Return `null` in case of an error
     }
   }
 
@@ -126,6 +144,6 @@ class AdminHotelProvider with ChangeNotifier {
 
   void updateSelectedIndex(int newIndex) {
     _selectedIndex = newIndex;
-    notifyListeners(); 
+    notifyListeners();
   }
 }
