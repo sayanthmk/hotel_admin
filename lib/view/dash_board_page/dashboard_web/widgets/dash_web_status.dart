@@ -17,22 +17,22 @@ class DashWebQuickStats extends StatelessWidget {
         children: const [
           StatCard(
               title: 'Total Hotels',
-              value: '120',
+              value: '3',
               icon: Icons.hotel,
               color: Colors.blue),
           StatCard(
               title: 'Active Bookings',
-              value: '450',
+              value: '15',
               icon: Icons.book_online,
               color: Colors.green),
           StatCard(
               title: 'Total Revenue',
-              value: '₹35,000',
+              value: '₹2413',
               icon: Icons.attach_money,
               color: Colors.orange),
           StatCard(
               title: 'Active Users',
-              value: '2,320',
+              value: '4',
               icon: Icons.people,
               color: Colors.purple),
         ],

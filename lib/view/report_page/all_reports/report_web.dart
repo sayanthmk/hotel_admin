@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_admin/controller/data_service.dart/admin_data_service.dart';
 import 'package:hotel_admin/controller/report_service/report_service_page.dart';
 import 'package:hotel_admin/model/report_model.dart';
+import 'package:hotel_admin/view/report_page/reports_detail_page/report_detail_page.dart';
 import 'package:hotel_admin/view/report_page/widgets/report_list_heading.dart';
 import 'package:hotel_admin/widgets/list_widgets/list_page/all_hotel_search.dart';
 import 'package:hotel_admin/widgets/list_widgets/list_page/filterbutton.dart';
@@ -15,6 +17,7 @@ class ReportsWebSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hotelProvider = Provider.of<AdminHotelProvider>(context);
     final reportProvider = Provider.of<ReportServiceProvider>(context);
 
     if (reportProvider.isLoading) {
@@ -26,6 +29,7 @@ class ReportsWebSection extends StatelessWidget {
     }
 
     final reports = reportProvider.reportedIssues;
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -40,10 +44,41 @@ class ReportsWebSection extends StatelessWidget {
                   child: CustomHotelSearchBar(),
                 ),
                 const SizedBox(width: 20),
-                UserInfo(
-                  userName: "John Doe",
-                  userInitials: "JD",
-                  onNotificationsPressed: () {},
+                FutureBuilder<String?>(
+                  future: hotelProvider.getTheAdminName(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return UserInfo(
+                        userName: "Loading...",
+                        userInitials: "..",
+                        onNotificationsPressed: () {},
+                      );
+                    } else if (snapshot.hasError ||
+                        !snapshot.hasData ||
+                        snapshot.data == null) {
+                      return UserInfo(
+                        userName: "Admin",
+                        userInitials: "A",
+                        onNotificationsPressed: () {},
+                      );
+                    } else {
+                      final name = snapshot.data!;
+                      final initials = name.isNotEmpty
+                          ? name
+                              .trim()
+                              .split(' ')
+                              .map((word) => word[0])
+                              .take(2)
+                              .join()
+                              .toUpperCase()
+                          : "A";
+                      return UserInfo(
+                        userName: name,
+                        userInitials: initials,
+                        onNotificationsPressed: () {},
+                      );
+                    }
+                  },
                 ),
               ],
             ),
@@ -102,16 +137,15 @@ class ReportsWebSection extends StatelessWidget {
                       const SizedBox(height: 8),
                   itemBuilder: (context, index) {
                     AdminReportModel report =
-                        reports[index] as AdminReportModel;
+                        AdminReportModel.fromMap(reports[index]);
                     return InkWell(
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         HotelsDetailsPageSection(hotel: hotel),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ReportDetailsPageSection(report: report)),
+                        );
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -131,16 +165,20 @@ class ReportsWebSection extends StatelessWidget {
                         child: Row(
                           children: [
                             Expanded(
-                                flex: 3,
-                                child: Text(report.userEmail!,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w500))),
-                            Expanded(flex: 2, child: Text(report.userEmail!)),
+                              flex: 2,
+                              child: Text(report.userEmail!.split('@')[0],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500)),
+                            ),
                             Expanded(
                                 flex: 2,
-                                child: Text(
-                                    '${report.userEmail},${report.userEmail}')),
-                            Expanded(flex: 2, child: Text(report.userEmail!)),
+                                child:
+                                    Text(report.issueDate?.toString() ?? '')),
+                            Expanded(
+                              flex: 2,
+                              child: Text('${report.userEmail}'),
+                            ),
+                            Expanded(flex: 2, child: Text(report.issueId!)),
                             const Expanded(
                               flex: 2,
                               child: CustomHotelStatusChip(status: 'available'),

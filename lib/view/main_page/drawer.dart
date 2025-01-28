@@ -5,7 +5,6 @@ import 'package:hotel_admin/view/dash_board_page/dash_main.dart';
 import 'package:hotel_admin/view/main_page/widgets/derawer_sel_page.dart';
 import 'package:hotel_admin/view/permissions_page/permission_page/permission_page.dart';
 import 'package:hotel_admin/view/report_page/all_reports/all_reports.dart';
-import 'package:hotel_admin/view/report_page/report_page.dart';
 import 'package:provider/provider.dart';
 
 class DrawerSample extends StatelessWidget {

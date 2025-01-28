@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:hotel_admin/view/report_page/all_reports/report_mobile.dart';
 import 'package:hotel_admin/view/report_page/all_reports/report_web.dart';
 

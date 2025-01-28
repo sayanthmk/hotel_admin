@@ -40,20 +40,20 @@ class EnhancedTopContainer extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Top Gradient Bar
-          Container(
-            height: 3,
-            margin: const EdgeInsets.only(bottom: 16),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.blue.shade300,
-                  Colors.blue.shade500,
-                  Colors.blue.shade700,
-                ],
-              ),
-              borderRadius: BorderRadius.circular(1.5),
-            ),
-          ),
+          // Container(
+          //   height: 3,
+          //   margin: const EdgeInsets.only(bottom: 16),
+          //   decoration: BoxDecoration(
+          //     gradient: LinearGradient(
+          //       colors: [
+          //         Colors.blue.shade300,
+          //         Colors.blue.shade500,
+          //         Colors.blue.shade700,
+          //       ],
+          //     ),
+          //     borderRadius: BorderRadius.circular(1.5),
+          //   ),
+          // ),
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

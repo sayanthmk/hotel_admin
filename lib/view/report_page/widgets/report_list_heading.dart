@@ -14,7 +14,7 @@ class ReportListHeading extends StatelessWidget {
       child: const Row(
         children: [
           Expanded(
-              flex: 3,
+              flex: 2,
               child: Text(
                 'User Name',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -34,7 +34,7 @@ class ReportListHeading extends StatelessWidget {
           Expanded(
               flex: 2,
               child: Text(
-                'Contact Number',
+                'ReportId',
                 style: TextStyle(fontWeight: FontWeight.bold),
               )),
           Expanded(

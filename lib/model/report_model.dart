@@ -4,6 +4,7 @@ class AdminReportModel {
   final String? issueContent;
   final DateTime? issueDate;
   final String? userEmail;
+  final String? issueId;
 
   AdminReportModel({
     this.id,
@@ -11,20 +12,22 @@ class AdminReportModel {
     this.issueContent,
     this.issueDate,
     this.userEmail,
+    this.issueId,
   });
 
   factory AdminReportModel.fromMap(
     Map<String, dynamic> map, {
     String? id,
   }) {
+    final issuerpt = map['issueDetails'];
     return AdminReportModel(
-      hotelId: map['hotelId'] ?? '',
-      id: id,
-      issueDate: (map['issueDate'] != null)
-          ? DateTime.parse(map['issueDate'])
-          : DateTime.now(),
-      issueContent: map['issue_content'] ?? '',
-      userEmail: map['userEmail'] ?? '',
-    );
+        hotelId: map['hotelId'] ?? '',
+        id: id,
+        issueDate: (issuerpt['issueDate'] != null)
+            ? DateTime.parse(issuerpt['issueDate'])
+            : DateTime.now(),
+        issueContent: issuerpt['issue_content'] ?? '',
+        userEmail: map['userEmail'] ?? '',
+        issueId: map['issueId']);
   }
 }

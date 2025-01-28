@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_admin/controller/data_service.dart/admin_data_service.dart';
+import 'package:hotel_admin/model/hotel_model.dart';
+import 'package:provider/provider.dart';
 
 class DashWebHotelManagement extends StatelessWidget {
   const DashWebHotelManagement({super.key});
@@ -21,18 +24,34 @@ class DashWebHotelManagement extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                childAspectRatio: 1.2,
-              ),
-              itemCount: 8,
-              itemBuilder: (context, index) {
-                return const HotelCard();
+            Consumer<AdminHotelProvider>(
+              builder: (context, hotelProvider, child) {
+                if (hotelProvider.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (hotelProvider.errorMessage.isNotEmpty) {
+                  return Center(
+                      child: Text('Error: ${hotelProvider.errorMessage}'));
+                }
+
+                final hotels = hotelProvider.approvedHotels;
+
+                return GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: 1.2,
+                  ),
+                  itemCount: hotels.length,
+                  itemBuilder: (context, index) {
+                    HotelModel hotel = hotels[index];
+                    return HotelCard(hotel: hotel);
+                  },
+                );
               },
             ),
           ],
@@ -43,7 +62,9 @@ class DashWebHotelManagement extends StatelessWidget {
 }
 
 class HotelCard extends StatelessWidget {
-  const HotelCard({super.key});
+  final HotelModel hotel;
+
+  const HotelCard({super.key, required this.hotel});
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +78,7 @@ class HotelCard extends StatelessWidget {
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(4)),
               image: DecorationImage(
-                image: NetworkImage(
-                    'https://picsum.photos/200/300?random=${DateTime.now().millisecond}'),
+                image: NetworkImage(hotel.images[0]),
                 fit: BoxFit.cover,
               ),
             ),
@@ -68,23 +88,24 @@ class HotelCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Grand Hotel',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                Text(
+                  hotel.hotelName,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'New York, USA',
+                  '${hotel.city},${hotel.country}',
                   style: TextStyle(color: Colors.grey[600], fontSize: 14),
                 ),
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Icon(Icons.star, color: Colors.amber, size: 16),
-                    const Text(' 4.5'),
+                    const Icon(Icons.hotel, color: Colors.green, size: 16),
+                    Text(' ${hotel.hotelType}'),
                     const Spacer(),
                     Text(
-                      '₹200/night',
+                      '₹${hotel.propertySetup}/night',
                       style: TextStyle(
                           color: Colors.grey[800], fontWeight: FontWeight.bold),
                     ),

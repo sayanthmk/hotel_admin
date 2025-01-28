@@ -81,7 +81,6 @@ class ReportsMobileSection extends StatelessWidget {
             const SizedBox(height: 24),
             ListView.separated(
               shrinkWrap: true,
-              // physics: const ClampingScrollPhysics(),
               itemCount: reports.length,
               separatorBuilder: (context, index) => const SizedBox(height: 8),
               itemBuilder: (context, index) {

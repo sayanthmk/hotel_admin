@@ -28,7 +28,7 @@ class HotelModel {
   final List<String> images;
 
   HotelModel({
-    required this.hotelId, // Add this to the constructor
+    required this.hotelId,
     required this.hotelType,
     required this.propertySetup,
     required this.hotelName,
@@ -59,7 +59,7 @@ class HotelModel {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     Map<String, dynamic> hotelDetails = data;
 
-    log('Parsing hotel data');
+    // log('Parsing hotel data');
     return HotelModel(
       hotelId: doc.id, // Extract the hotelId from the DocumentSnapshot ID
       hotelType: hotelDetails['hotel_type'] ?? '',

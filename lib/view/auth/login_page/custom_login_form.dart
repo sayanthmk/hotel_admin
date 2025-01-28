@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:hotel_admin/constants/colors/colors.dart';
 import 'package:hotel_admin/view/auth/signup_page/sign_up_form.dart';

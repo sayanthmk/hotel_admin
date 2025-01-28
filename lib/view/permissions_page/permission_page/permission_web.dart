@@ -41,11 +41,47 @@ class PermissionsWebSection extends StatelessWidget {
                   child: CustomHotelSearchBar(),
                 ),
                 const SizedBox(width: 20),
-                UserInfo(
-                  userName: "John Doe",
-                  userInitials: "JD",
-                  onNotificationsPressed: () {},
+                FutureBuilder<String?>(
+                  future: hotelProvider.getTheAdminName(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return UserInfo(
+                        userName: "Loading...",
+                        userInitials: "..",
+                        onNotificationsPressed: () {},
+                      );
+                    } else if (snapshot.hasError ||
+                        !snapshot.hasData ||
+                        snapshot.data == null) {
+                      return UserInfo(
+                        userName: "Admin",
+                        userInitials: "A",
+                        onNotificationsPressed: () {},
+                      );
+                    } else {
+                      final name = snapshot.data!;
+                      final initials = name.isNotEmpty
+                          ? name
+                              .trim()
+                              .split(' ')
+                              .map((word) => word[0])
+                              .take(2)
+                              .join()
+                              .toUpperCase()
+                          : "A";
+                      return UserInfo(
+                        userName: name,
+                        userInitials: initials,
+                        onNotificationsPressed: () {},
+                      );
+                    }
+                  },
                 ),
+                // UserInfo(
+                //   userName: "John Doe",
+                //   userInitials: "JD",
+                //   onNotificationsPressed: () {},
+                // ),
               ],
             ),
             const SizedBox(height: 32),

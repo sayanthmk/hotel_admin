@@ -62,9 +62,7 @@ class NavItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: TextButton(
-        onPressed: () {
-          // Add navigation functionality here
-        },
+        onPressed: () {},
         child: Text(
           title,
           style: TextStyle(
