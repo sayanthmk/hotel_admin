@@ -81,7 +81,6 @@ class DashWebAnalyticsOverview extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    // Placeholder for additional charts
                   ],
                 ),
               ),

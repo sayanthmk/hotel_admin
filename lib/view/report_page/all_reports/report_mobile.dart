@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_admin/controller/data_service.dart/admin_data_service.dart';
 import 'package:hotel_admin/controller/report_service/report_service_page.dart';
 import 'package:hotel_admin/model/report_model.dart';
 import 'package:hotel_admin/widgets/list_widgets/list_page/all_hotel_search.dart';
@@ -13,6 +14,7 @@ class ReportsMobileSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final reportProvider = Provider.of<ReportServiceProvider>(context);
+    final hotelProvider = Provider.of<AdminHotelProvider>(context);
 
     if (reportProvider.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -33,11 +35,47 @@ class ReportsMobileSection extends StatelessWidget {
               children: [
                 const CustomHotelSearchBar(),
                 const SizedBox(height: 16),
-                UserInfo(
-                  userName: "John Doe",
-                  userInitials: "JD",
-                  onNotificationsPressed: () {},
+                FutureBuilder<String?>(
+                  future: hotelProvider.getTheAdminName(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return UserInfo(
+                        userName: "Loading...",
+                        userInitials: "..",
+                        onNotificationsPressed: () {},
+                      );
+                    } else if (snapshot.hasError ||
+                        !snapshot.hasData ||
+                        snapshot.data == null) {
+                      return UserInfo(
+                        userName: "Admin",
+                        userInitials: "A",
+                        onNotificationsPressed: () {},
+                      );
+                    } else {
+                      final name = snapshot.data!;
+                      final initials = name.isNotEmpty
+                          ? name
+                              .trim()
+                              .split(' ')
+                              .map((word) => word[0])
+                              .take(2)
+                              .join()
+                              .toUpperCase()
+                          : "A";
+                      return UserInfo(
+                        userName: name,
+                        userInitials: initials,
+                        onNotificationsPressed: () {},
+                      );
+                    }
+                  },
                 ),
+                // UserInfo(
+                //   userName: "John Doe",
+                //   userInitials: "JD",
+                //   onNotificationsPressed: () {},
+                // ),
               ],
             ),
             const SizedBox(height: 24),
@@ -84,7 +122,9 @@ class ReportsMobileSection extends StatelessWidget {
               itemCount: reports.length,
               separatorBuilder: (context, index) => const SizedBox(height: 8),
               itemBuilder: (context, index) {
-                AdminReportModel report = reports[index] as AdminReportModel;
+                // AdminReportModel report = reports[index] as AdminReportModel;
+                AdminReportModel report =
+                    AdminReportModel.fromMap(reports[index]);
                 return Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(

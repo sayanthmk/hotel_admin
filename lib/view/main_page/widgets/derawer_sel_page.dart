@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:hotel_admin/controller/auth_service/auth_service.dart';
 import 'package:hotel_admin/controller/data_service.dart/admin_data_service.dart';
@@ -60,14 +59,6 @@ class CustomDrawerWidget extends StatelessWidget {
                     onTap: () => context
                         .read<AdminHotelProvider>()
                         .updateSelectedIndex(3),
-                  ),
-                  DrawerItemWidget(
-                    icon: Icons.settings,
-                    title: 'Settings',
-                    selected: selectedIndex == 4,
-                    onTap: () => context
-                        .read<AdminHotelProvider>()
-                        .updateSelectedIndex(4),
                   ),
                 ],
               ),

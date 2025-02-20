@@ -43,8 +43,8 @@ class DrawerHeaderWidget extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Center(
-              child: Icon(Icons.abc),
+            child: Center(
+              child: Image.asset('assets/images/admin_staywise_2_rbg.png'),
               // child: Image.asset(
               //   logoPath,
               //   width: 40,

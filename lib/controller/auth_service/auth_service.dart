@@ -17,7 +17,6 @@ class AuthService with ChangeNotifier {
       notifyListeners();
       return result.user;
     } catch (e) {
-      // print(e.toString());
       return null;
     }
   }
@@ -30,7 +29,6 @@ class AuthService with ChangeNotifier {
       notifyListeners();
       return result.user;
     } catch (e) {
-      // print(e.toString());
       return null;
     }
   }
@@ -51,7 +49,6 @@ class AuthService with ChangeNotifier {
       notifyListeners();
       return result.user;
     } catch (e) {
-      // print(e.toString());
       return null;
     }
   }
@@ -78,7 +75,6 @@ class AuthService with ChangeNotifier {
       notifyListeners();
       return result.user;
     } catch (e) {
-      // print(e.toString());
       return null;
     }
   }

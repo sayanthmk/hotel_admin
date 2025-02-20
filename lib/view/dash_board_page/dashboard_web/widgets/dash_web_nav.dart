@@ -16,7 +16,6 @@ class DashWebNavBar extends StatelessWidget {
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Logo Section
           Row(
             children: [
               SizedBox(width: 8),
@@ -30,7 +29,6 @@ class DashWebNavBar extends StatelessWidget {
               ),
             ],
           ),
-          // Navigation Links Section
           Row(
             children: [
               NavItem(title: 'Home', isActive: true),

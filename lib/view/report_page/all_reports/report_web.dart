@@ -181,7 +181,7 @@ class ReportsWebSection extends StatelessWidget {
                             Expanded(flex: 2, child: Text(report.issueId!)),
                             const Expanded(
                               flex: 2,
-                              child: CustomHotelStatusChip(status: 'available'),
+                              child: CustomHotelStatusChip(status: 'report'),
                             ),
                             Expanded(
                               flex: 1,

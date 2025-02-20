@@ -73,4 +73,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'roombookingapp-da5df.appspot.com',
     measurementId: 'G-04Y69LGLZX',
   );
+
 }

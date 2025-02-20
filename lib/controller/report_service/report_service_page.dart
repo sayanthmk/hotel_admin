@@ -15,6 +15,7 @@ class ReportServiceProvider with ChangeNotifier {
 
   ReportServiceProvider() {
     fetchReportedIssues();
+ 
   }
 
   Future<void> fetchReportedIssues() async {

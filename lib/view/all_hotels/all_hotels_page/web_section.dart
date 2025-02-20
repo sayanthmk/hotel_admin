@@ -177,9 +177,10 @@ class AllHotelsWebSection extends StatelessWidget {
                                 flex: 2,
                                 child: Text('${hotel.state},${hotel.country}')),
                             Expanded(flex: 2, child: Text(hotel.contactNumber)),
-                            const Expanded(
+                            Expanded(
                               flex: 2,
-                              child: CustomHotelStatusChip(status: 'available'),
+                              child: CustomHotelStatusChip(
+                                  status: '${hotel.status}'),
                             ),
                             Expanded(
                               flex: 1,

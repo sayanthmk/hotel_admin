@@ -12,15 +12,18 @@ class CustomHotelStatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     Color chipColor;
     String displayStatus;
-
     switch (status.toLowerCase()) {
-      case 'available':
+      case 'approved':
         chipColor = Colors.green;
-        displayStatus = 'Available';
+        displayStatus = 'Approved';
         break;
-      case 'occupied':
+      case 'pending':
         chipColor = Colors.orange;
-        displayStatus = 'Occupied';
+        displayStatus = 'Pending';
+        break;
+      case 'report':
+        chipColor = Colors.red;
+        displayStatus = 'Report Review';
         break;
       default:
         chipColor = Colors.grey;

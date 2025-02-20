@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_admin/controller/data_service.dart/admin_data_service.dart';
+import 'package:hotel_admin/model/hotel_model.dart';
+import 'package:provider/provider.dart';
 
 class MobileHotelGrid extends StatelessWidget {
   const MobileHotelGrid({super.key});
@@ -18,17 +21,28 @@ class MobileHotelGrid extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 4,
-            itemBuilder: (context, index) {
-              return HotelCard(
-                hotelName: 'Hotel ${index + 1}',
-                location: 'Location ${index + 1}',
-                rating: 4.5,
-                price: 200.0 + (index * 50),
-                imageUrl: 'https://picsum.photos/200/300?random=$index',
+          Consumer<AdminHotelProvider>(
+            builder: (context, hotelProvider, child) {
+              if (hotelProvider.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (hotelProvider.errorMessage.isNotEmpty) {
+                return Center(
+                    child: Text('Error: ${hotelProvider.errorMessage}'));
+              }
+
+              final hotels = hotelProvider.approvedHotels;
+              return SizedBox(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: hotels.length,
+                  itemBuilder: (context, index) {
+                    HotelModel hotel = hotels[index];
+                    return HotelCard(hotel: hotel);
+                  },
+                ),
               );
             },
           ),
@@ -39,18 +53,10 @@ class MobileHotelGrid extends StatelessWidget {
 }
 
 class HotelCard extends StatelessWidget {
-  final String hotelName;
-  final String location;
-  final double rating;
-  final double price;
-  final String imageUrl;
+  final HotelModel hotel;
 
   const HotelCard({
-    required this.hotelName,
-    required this.location,
-    required this.rating,
-    required this.price,
-    required this.imageUrl,
+    required this.hotel,
     super.key,
   });
 
@@ -66,7 +72,11 @@ class HotelCard extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(imageUrl),
+                image: NetworkImage(
+                  hotel.images.isNotEmpty
+                      ? hotel.images[0]
+                      : 'https://via.placeholder.com/200',
+                ),
                 fit: BoxFit.cover,
               ),
             ),
@@ -77,7 +87,7 @@ class HotelCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  hotelName,
+                  hotel.hotelName,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -85,7 +95,7 @@ class HotelCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  location,
+                  '${hotel.city}, ${hotel.country}',
                   style: TextStyle(
                     color: Colors.grey[600],
                   ),
@@ -97,11 +107,11 @@ class HotelCard extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(Icons.star, color: Colors.amber, size: 16),
-                        Text(' $rating'),
+                        Text(' ${hotel.hotelType}'),
                       ],
                     ),
                     Text(
-                      '\$$price/night',
+                      '₹${hotel.propertySetup}/night',
                       style: TextStyle(
                         color: Colors.grey[800],
                         fontWeight: FontWeight.bold,

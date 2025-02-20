@@ -39,8 +39,6 @@ class DashWebCarouselSection extends StatelessWidget {
             );
           }).toList(),
         ),
-
-        // overlay text
         Positioned.fill(
           child: Container(
             alignment: Alignment.center,

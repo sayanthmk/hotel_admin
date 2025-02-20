@@ -11,6 +11,7 @@ class AdminHotelProvider with ChangeNotifier {
   List<HotelModel> _hotels = [];
   List<HotelModel> _approvedHotels = [];
   List<HotelModel> _nonApprovedHotels = [];
+  List<HotelModel> filteredHotels = [];
 
   bool _isLoading = true;
   String _errorMessage = '';
@@ -124,7 +125,6 @@ class AdminHotelProvider with ChangeNotifier {
 
       return currentUserId;
     } catch (e) {
-      // print('Error fetching admin ID: $e');
       return null;
     }
   }
